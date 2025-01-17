@@ -1,0 +1,87 @@
+﻿@model IEnumerable<CrudProductCategory.Models.Product>
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<h3>@ViewData["Title"]</h3>
+<p>
+    <a asp-action="Create" class="btn btn-primary btn-sm">Create New Product</a>
+</p>
+<table class="table table-bordered table-responsive table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(Model=>Model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(Model=>Model.ProductName)
+            </th>
+           @*  <th>
+                @Html.DisplayNameFor(Model => Model.Price)
+            </th> *@
+           @*  <th>
+                @Html.DisplayNameFor(Model => Model.Qty)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(Model=>Model.Categories.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(Model => Model.Categories.CategoryName)
+            </th>
+           @*  <th>
+                Action
+            </th> *@
+        </tr>
+    </thead>
+
+    <tbody>
+        @if(Model != null && Model.Any())
+        {
+           @foreach(var product in Model)
+           {
+               <tr>
+                   <td>
+                       @Html.DisplayFor(Model=>product.ProductName)
+                   </td>
+                   <td>
+                       @Html.DisplayFor(Model=>product.Price)
+                   </td>
+                    <td>
+                        @Html.DisplayFor(Model => product.Qty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(Model => product.Categories.CategoryName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@product.ProductId" class="btn btn-success btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@product.ProductId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+               </tr>
+           }
+
+        }else{
+            <tr>
+                <td colspan="5">
+                    <div>
+                        Product not available in the database
+                    </div>    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @if (ViewBag.CurrentPage > 1)
+    {
+        @Html.ActionLink("Previous", "Index", new { page = ViewBag.CurrentPage - 1, pageSize = 10 })
+    }
+
+    Page @ViewBag.CurrentPage if @ViewBag.TotalPages
+
+    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+    {
+        @Html.ActionLink("Next", "Index", new { page = ViewBag.CurrentPage + 1, pageSize = 10 })
+    }
+
+</div>

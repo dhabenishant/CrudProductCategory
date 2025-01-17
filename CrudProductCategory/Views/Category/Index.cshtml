@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CrudProductCategory.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Category List</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary btn-sm">Create New</a>
+</p>
+<table class="table table-bordered table-responsive table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn btn-success btn-sm">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CategoryId" class="btn btn-dark btn-sm">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
